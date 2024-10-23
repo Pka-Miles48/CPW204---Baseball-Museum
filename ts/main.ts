@@ -1,163 +1,97 @@
 /**
- *  Represents an individual painting that can be purchased
+ *  Represents an individual baseball item that can be purchased
  */
-class Painting {
+class BaseballItem {
     /**
      * The 5 digit inventory number
      */
-    inventorynumbers : string;
+    inventoryNumber: string;
 
     /**
      * The 5 digit global ID
      */
-    globalIDs : string;
+    globalID: string;
 
     /**
-     * The name of the artwork archive
+     * The name of the baseball archive
      */
-    artworkarchive : string;
+    baseballArchive: string;
 
     /**
-     * The retail price of the painting
+     * The retail price of the baseball item
      */
-    price : number;
+    price: number;
 
     /**
-     * The title of the painting
+     * The title of the baseball item
      */
-    title : string;
+    title: string;
 }
 
-// Painting object test code
-let myPainting = new Painting();
-myPainting.inventorynumbers = "48L08";
-myPainting.globalIDs = "DW284";
-myPainting.artworkarchive = "Schedule Feature"
-myPainting.price = 28.99;
-myPainting.title = "The Art of Programming for Novices"
+// BaseballItem object test code
+let myBaseballItem = new BaseballItem();
+myBaseballItem.inventoryNumber = "48L08";
+myBaseballItem.globalID = "DW284";
+myBaseballItem.baseballArchive = "Hall of Fame Collection";
+myBaseballItem.price = 28.99;
+myBaseballItem.title = "Historic Home Run Ball";
 
-console.log(myPainting);
-
+console.log(myBaseballItem);
 
 window.onload = function() {
-    // set up button click for add painting form
-    let addPaintingBtn = document.querySelector("#add-painting") as HTMLButtonElement;
-    addPaintingBtn.onclick = processPainting;
+    // set up button click for add baseball item form
+    let addBaseballItemBtn = document.querySelector("#add-baseball-item") as HTMLButtonElement;
+    addBaseballItemBtn.onclick = processBaseballItem;
 }
 
-function processPainting() {
-    console.log("processPainting was called")
+function processBaseballItem() {
+    console.log("processBaseballItem was called");
 
-    let userPainting = getPainting();
-    if (userPainting !=null) {
-        addPainting(userPainting);
+    let userBaseballItem = getBaseballItem();
+    if (userBaseballItem != null) {
+        addBaseballItem(userBaseballItem);
     }
 }
 
 /**
- * This function will retrieve all the painting
+ * This function will retrieve all the baseball item
  * data from the HTML page. If all data is valid
- * a painting project will be returned. If any data
+ * a baseball item object will be returned. If any data
  * is invalid, null will be returned and error messages
  * will be shown on the web page.
  */
-function getPainting():Painting {
+function getBaseballItem(): BaseballItem {
     clearAllErrorMessages();
 
     // Get all inputs
-    let inventorynumbersTextBox = document.querySelector("#inventory-numbers") as HTMLInputElement;
-    let globalIDsTextBox = document.querySelector("#global-ids") as HTMLInputElement;
-    let artworkarchiveTextBox = document.querySelector("artwork-archive") as HTMLInputElement;
+    let inventoryNumberTextBox = document.querySelector("#inventory-number") as HTMLInputElement;
+    let globalIDTextBox = document.querySelector("#global-id") as HTMLInputElement;
+    let baseballArchiveTextBox = document.querySelector("#baseball-archive") as HTMLInputElement;
     let priceTextBox = document.querySelector("#price") as HTMLInputElement;
     let titleTextBox = document.querySelector("#title") as HTMLInputElement;
 
     // Validate data
-    let isValidData:boolean = true;
+    let isValidData: boolean = true;
 
-    // Validate the Inventory Numbers
-    let inventorynumbers = inventorynumbersTextBox.value;
-    if (isValidInventoryNumbers(inventorynumbers)) {
+    // Validate the Inventory Number
+    let inventoryNumber = inventoryNumberTextBox.value;
+    if (!isValidInventoryNumber(inventoryNumber)) {
         isValidData = false;
-        inventorynumbersTextBox.nextElementSibling.textContent = "The inventory number must represent the last two digits of the year and then define a category or type of work";
+        inventoryNumberTextBox.nextElementSibling.textContent = "The inventory number must represent the last two digits of the year and then define a category or type of item";
     }
 
-    // Validate the Global IDs
-    function isValidGlobalId(id: string): boolean {
-        // A simple regex for validation
-        const regex = /^[a-zA-Z0-9-_]+$/;
-        return regex.test(id);
-    }
-    
-    // Usage
-    const id: string = "yourGlobalId";
-    if(isValidGlobalId(id)) {
-        console.log("Valid Global ID");
+    // Validate the Global ID
+    let globalID = globalIDTextBox.value;
+    if (!isValidGlobalID(globalID)) {
         isValidData = false;
-        globalIDsTextBox.nextElementSibling.textContent = "You must enter a 5 digit global ID";
-    } else {
-        console.log("Invalid Global ID");
-    }
-    
-    
-    // Validate the Artwork Archive
-    // Define the structure of an artwork item
-    interface Artwork {
-        id: string;
-        title: string;
-        artist: string;
-        year: number;
+        globalIDTextBox.nextElementSibling.textContent = "You must enter a 5 digit global ID";
     }
 
-    // Define the structure of an artwork archive
-    interface ArtworkArchive {
-        artworks: Artwork[];
-    }
-
-    // Function to validate an artwork item
-    function isValidArtwork(item: any): item is Artwork {
-        return typeof item.id === 'string' &&
-            typeof item.title === 'string' &&
-            typeof item.artist === 'string' &&
-            typeof item.year === 'number';
-    }
-
-    // Function to validate an artwork archive
-    function isValidArtworkArchive(archive: any): archive is ArtworkArchive {
-        if (!Array.isArray(archive.artworks)) {
-            return false;
-        }
-        for (const item of archive.artworks) {
-            if (!isValidArtwork(item)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // Usage
-    const archive: any = {
-        artworks: [
-            {
-                id: "1",
-                title: "Artwork 1",
-                artist: "Artist 1",
-                year: 2020
-            },
-            {
-                id: "2",
-                title: "Artwork 2",
-                artist: "Artist 2",
-                year: 2021
-            }
-        ]
-    };
-    ;
-    if (isValidArtworkArchive(archive)) {
-        console.log("Valid Artwork Archive");
+    // Validate the Baseball Archive
+    let baseballArchive = baseballArchiveTextBox.value;
+    if (baseballArchive.trim() == "") {
         isValidData = false;
-        artworkarchiveTextBox.nextElementSibling.textContent = "You must enter the name of the artwork archive";
-    } else {
-        console.log("Invalid Artwork Archive");
+        baseballArchiveTextBox.nextElementSibling.textContent = "You must enter the name of the baseball archive";
     }
 
     // Validate the Price
@@ -168,47 +102,55 @@ function getPainting():Painting {
     }
 
     // Validate the Title
-    let title:string = titleTextBox.value;
+    let title = titleTextBox.value;
     if (title.trim() == "") {
         isValidData = false;
-        let titleErrorSpan = titleTextBox.nextElementSibling;
-        titleErrorSpan.textContent = "You must provide a title";
+        titleTextBox.nextElementSibling.textContent = "You must provide a title";
     }
 
     if (isValidData) {
-        let addedPainting = new Painting();
-        addedPainting.inventorynumbers = inventorynumbers;
-        addedPainting.globalIDs = (id);
-        addedPainting.artworkarchive = (archive);
-        addedPainting.price = price;
-        addedPainting.title = title;
+        let addedBaseballItem = new BaseballItem();
+        addedBaseballItem.inventoryNumber = inventoryNumber;
+        addedBaseballItem.globalID = globalID;
+        addedBaseballItem.baseballArchive = baseballArchive;
+        addedBaseballItem.price = price;
+        addedBaseballItem.title = title;
 
-        return addedPainting;
+        return addedBaseballItem;
     }
     return null; // Return null if any invalid data is present
 }
 
 /**
- * This validates an inventory number..
+ * This validates an inventory number.
  * @param n The string to be validated
  * @returns True if n is a valid inventory number
  */
-function isValidInventoryNumbers(n) {
-    return typeof n === 'number' && !isNaN(n) && isFinite(n);
+function isValidInventoryNumber(n: string): boolean {
+    return /^[0-9]{5}$/.test(n);
 }
 
 /**
- * Adds a Painting object to web storage. Assumes
- * all data is valid
- * @param b The Painting containing valid data to be added
+ * This validates a global ID.
+ * @param id The string to be validated
+ * @returns True if id is a valid global ID
  */
-function addPainting(b:Painting):void{
-    alert("Data was valid, painting added")
+function isValidGlobalID(id: string): boolean {
+    return /^[a-zA-Z0-9]{5}$/.test(id);
+}
+
+/**
+ * Adds a BaseballItem object to web storage. Assumes
+ * all data is valid
+ * @param b The BaseballItem containing valid data to be added
+ */
+function addBaseballItem(b: BaseballItem): void {
+    alert("Data was valid, baseball item added");
     console.log(b);
 }
 
 /**
- * Clears all the validation eror message spans
+ * Clears all the validation error message spans
  * in the form
  */
 function clearAllErrorMessages() {
@@ -216,7 +158,7 @@ function clearAllErrorMessages() {
     let allSpans = document.querySelectorAll("form span.error-msg");
 
     // Loop through, and set each span to an empty string
-    for(let i = 0; i < allSpans.length; i++){
+    for (let i = 0; i < allSpans.length; i++) {
         let currentSpan = allSpans[i];
         currentSpan.textContent = "";
     }
