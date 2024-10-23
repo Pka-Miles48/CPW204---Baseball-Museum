@@ -1,5 +1,5 @@
 # CPW 204 Baseball Museum 
-This repository is an example used to gain
+This repository is an example that is used to gain
 experience with source control and TypeScript.
 
 ## Live website
