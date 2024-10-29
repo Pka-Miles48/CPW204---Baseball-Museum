@@ -2,48 +2,37 @@
  *  Represents an individual baseball item that can be purchased
  */
 class BaseballItem {
-    /**
-     * The 5 digit inventory number
-     */
     inventoryNumber: string;
-
-    /**
-     * The 5 digit global ID
-     */
     globalID: string;
-
-    /**
-     * The name of the baseball archive
-     */
     baseballArchive: string;
-
-    /**
-     * The retail price of the baseball item
-     */
     price: number;
-
-    /**
-     * The title of the baseball item
-     */
     title: string;
+
+    constructor(inventoryNumber: string, globalID: string, baseballArchive: string, price: number, title: string) {
+        this.inventoryNumber = inventoryNumber;
+        this.globalID = globalID;
+        this.baseballArchive = baseballArchive;
+        this.price = price;
+        this.title = title;
+    }
 }
 
 // BaseballItem object test code
-let myBaseballItem = new BaseballItem();
-myBaseballItem.inventoryNumber = "48L08";
-myBaseballItem.globalID = "DW284";
-myBaseballItem.baseballArchive = "Hall of Fame Collection";
-myBaseballItem.price = 28.99;
-myBaseballItem.title = "Historic Home Run Ball";
+let myBaseballItem = new BaseballItem("48L08", "DW284", "Hall of Fame Collection", 28.99, "Historic Home Run Ball");
 
 console.log(myBaseballItem);
 
 window.onload = function() {
     // set up button click for add baseball item form
-    let addBaseballItemBtn = document.querySelector("#add-baseball-item") as HTMLButtonElement;
+    let addBaseballItemBtn = document.querySelector("#add-memorabilia") as HTMLButtonElement;
     addBaseballItemBtn.onclick = processBaseballItem;
 }
 
+/**
+ * This function is called when the "Submit Memorabilia" button is clicked.
+ * It processes the baseball item by retrieving the data from the form,
+ * validating it, and adding it if valid.
+ */
 function processBaseballItem() {
     console.log("processBaseballItem was called");
 
@@ -54,24 +43,22 @@ function processBaseballItem() {
 }
 
 /**
- * This function will retrieve all the baseball item
- * data from the HTML page. If all data is valid
- * a baseball item object will be returned. If any data
- * is invalid, null will be returned and error messages
- * will be shown on the web page.
+ * This function will retrieve all the baseball item data from the HTML page.
+ * If all data is valid, a baseball item object will be returned.
+ * If any data is invalid, null will be returned and error messages will be shown on the web page.
  */
-function getBaseballItem(): BaseballItem {
+function getBaseballItem(): BaseballItem | null {
     clearAllErrorMessages();
 
     // Get all inputs
-    let inventoryNumberTextBox = document.querySelector("#inventory-number") as HTMLInputElement;
-    let globalIDTextBox = document.querySelector("#global-id") as HTMLInputElement;
-    let baseballArchiveTextBox = document.querySelector("#baseball-archive") as HTMLInputElement;
+    let inventoryNumberTextBox = document.querySelector("#inventory-numbers") as HTMLInputElement;
+    let globalIDTextBox = document.querySelector("#global-ids") as HTMLInputElement;
+    let baseballArchiveTextBox = document.querySelector("#archive") as HTMLInputElement;
     let priceTextBox = document.querySelector("#price") as HTMLInputElement;
     let titleTextBox = document.querySelector("#title") as HTMLInputElement;
 
     // Validate data
-    let isValidData: boolean = true;
+    let isValidData = true;
 
     // Validate the Inventory Number
     let inventoryNumber = inventoryNumberTextBox.value;
@@ -109,13 +96,7 @@ function getBaseballItem(): BaseballItem {
     }
 
     if (isValidData) {
-        let addedBaseballItem = new BaseballItem();
-        addedBaseballItem.inventoryNumber = inventoryNumber;
-        addedBaseballItem.globalID = globalID;
-        addedBaseballItem.baseballArchive = baseballArchive;
-        addedBaseballItem.price = price;
-        addedBaseballItem.title = title;
-
+        let addedBaseballItem = new BaseballItem(inventoryNumber, globalID, baseballArchive, price, title);
         return addedBaseballItem;
     }
     return null; // Return null if any invalid data is present
@@ -140,8 +121,7 @@ function isValidGlobalID(id: string): boolean {
 }
 
 /**
- * Adds a BaseballItem object to web storage. Assumes
- * all data is valid
+ * Adds a BaseballItem object to web storage. Assumes all data is valid
  * @param b The BaseballItem containing valid data to be added
  */
 function addBaseballItem(b: BaseballItem): void {
@@ -150,12 +130,11 @@ function addBaseballItem(b: BaseballItem): void {
 }
 
 /**
- * Clears all the validation error message spans
- * in the form
+ * Clears all the validation error message spans in the form
  */
 function clearAllErrorMessages() {
     // Get all error spans
-    let allSpans = document.querySelectorAll("form span.error-msg");
+    let allSpans = document.querySelectorAll("form span.error-message");
 
     // Loop through, and set each span to an empty string
     for (let i = 0; i < allSpans.length; i++) {

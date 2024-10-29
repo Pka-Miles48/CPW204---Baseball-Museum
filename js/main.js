@@ -2,9 +2,6 @@
  *  Represents an individual baseball item that can be purchased
  */
 class BaseballItem {
-    /**
-     * The 5 digit inventory number
-     */
     constructor(inventoryNumber, globalID, baseballArchive, price, title) {
         this.inventoryNumber = inventoryNumber;
         this.globalID = globalID;
@@ -21,7 +18,7 @@ console.log(myBaseballItem);
 
 window.onload = function() {
     // set up button click for add baseball item form
-    let addBaseballItemBtn = document.querySelector("#add-baseball-item");
+    let addBaseballItemBtn = document.querySelector("#add-memorabilia");
     addBaseballItemBtn.onclick = processBaseballItem;
 }
 
@@ -45,9 +42,9 @@ function getBaseballItem() {
     clearAllErrorMessages();
 
     // Get all inputs
-    let inventoryNumberTextBox = document.querySelector("#inventory-number");
-    let globalIDTextBox = document.querySelector("#global-id");
-    let baseballArchiveTextBox = document.querySelector("#baseball-archive");
+    let inventoryNumberTextBox = document.querySelector("#inventory-numbers");
+    let globalIDTextBox = document.querySelector("#global-ids");
+    let baseballArchiveTextBox = document.querySelector("#archive");
     let priceTextBox = document.querySelector("#price");
     let titleTextBox = document.querySelector("#title");
 
@@ -130,7 +127,7 @@ function addBaseballItem(b) {
  */
 function clearAllErrorMessages() {
     // Get all error spans
-    let allSpans = document.querySelectorAll("form span.error-msg");
+    let allSpans = document.querySelectorAll("form span.error-message");
 
     // Loop through, and set each span to an empty string
     for (let i = 0; i < allSpans.length; i++) {
