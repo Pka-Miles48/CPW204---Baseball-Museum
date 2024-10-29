@@ -3,7 +3,7 @@ This repository is an example that is used to gain
 experience with source control and TypeScript.
 
 ## Live website
-Check out this live website, hosted by [live website](https://pka-miles48.github.io/CPW204---Baseball-Museum/)
+Check out this live website, hosted by [live website](https://pka-miles48.github.io/CPW204---Baseball-Museum/baseball.html)
 
 ## Getting Started
 
