@@ -108,7 +108,8 @@ function getBaseballItem(): BaseballItem | null {
  * @returns True if n is a valid inventory number
  */
 function isValidInventoryNumber(n: string): boolean {
-    return /^[0-9]{5}$/.test(n);
+    // Check if the inventory number is in the format "YYXXX"
+    return /^[0-9]{2}[A-Za-z0-9]{3}$/.test(n);
 }
 
 /**
